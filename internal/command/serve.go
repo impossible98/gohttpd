@@ -2,12 +2,19 @@ package command
 
 import (
 	// import built-in packages
-	"fmt"
-	"net/http"
+	"os"
+	// import third-party packages
+	"github.com/joho/godotenv"
+	// import local packages
+	"github.com/impossible98/gohttpd/internal/server"
 )
 
 func Serve(dir string) {
-	http.Handle("/", http.FileServer(http.Dir(dir)))
-	fmt.Println("Serving " + dir + " on http://localhost:80")
-	http.ListenAndServe(":80", nil)
+	err := godotenv.Load()
+	if err != nil {
+		port := "80"
+		server.InitServer(dir, port)
+	}
+	port := os.Getenv("PORT")
+	server.InitServer(dir, port)
 }
