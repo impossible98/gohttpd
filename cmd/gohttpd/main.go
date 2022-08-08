@@ -19,6 +19,7 @@ func main() {
 		if os.Args[1] == "--version" {
 			command.Version()
 		} else {
+			logo()
 			command.Serve(os.Args[1])
 		}
 	} else if len(os.Args) == 1 {
